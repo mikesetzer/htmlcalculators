@@ -1,0 +1,160 @@
+<link href='https://fonts.googleapis.com/css?family=Work+Sans:300,400,500' rel='stylesheet' type='text/css'>
+
+<section class="calculator2">
+
+  <style>
+    .calculator2 {
+      background-color: rgba(224, 183, 0, 0.13);
+      padding: 10px;
+      font-family: "Work Sans", "Helvetica", sans-serif;
+      max-width: 300px;
+      font-size: 16px;
+      line-height: 2.0;
+      font-weight: 400;
+    }
+    .calculator2 html {
+      box-sizing: border-box;
+    }
+    .calculator2 h2 {
+      padding: 10px;
+      padding-bottom: 0;
+      font-family: "Work Sans", "Helvetica", sans-serif;
+      font-weight: 500;
+      font-size: 22px;
+      text-align: center;
+      margin: 0;
+    }
+    .calculator2 .bottom {
+      font-size: 18px;
+    }
+    .calculator2 input {
+      font: 300 1em "Work Sans", "Helvetica", sans-serif;
+      border: 0;
+      outline: none;
+      color: white;
+      background-color: #539ed0;
+      -webkit-appearance: none;
+      padding: 5px 25px 5px 25px;
+      box-sizing: border-box;
+      max-width: 280px;
+      min-width: 280px;
+      text-align: right;
+      font-weight: 400;
+    }
+    .calculator2 .salary-initial, .calculator2 .donation {
+      position: relative;
+    }
+    .calculator2 #desiredIncrease {
+      padding: 5px 25px 5px 8px;
+    }
+    .calculator2 input[type=number]::-webkit-outer-spin-button,
+    .calculator2 input[type=number]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+    .calculator2 .input__label {
+      display: inline-block;
+      position: absolute;
+      top: -6px;
+      left: 0;
+      padding: 0 0 0 8px;
+      font-size: 100%;
+      user-select: none;
+      font-weight: 300;
+      color: white;
+    }
+    .calculator2 .output__label {
+      display: inline-block;
+      position: absolute;
+      top: -6px;
+      right: 0;
+      padding: 0 8px 0 0;
+      font-size: 100%;
+      user-select: none;
+      font-weight: 300;
+      color: white;
+    }
+    .calculator2 #increaseTotal, .calculator2 #increaseAmount {
+      max-width: 75px;
+      padding: 5px 8px 2px 8px;
+      outline: none;
+      color: black;
+      border-bottom: solid 3px #FFC904;
+    }
+
+  </style>
+
+  <script>
+    /*function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    } */
+
+    function getPreviousDonation() {
+      var theForm2 = document.forms["contributionCalculator"];
+      var previousDonationAmount = theForm2.elements["previousDonation"];
+      var myPreviousDonation = 0;
+
+      if (previousDonationAmount.value != "") {
+        myPreviousDonation = parseInt(previousDonationAmount.value);
+      }
+
+      return myPreviousDonation;
+    }
+
+    function getDesiredIncrease() {
+      var theForm2 = document.forms["contributionCalculator"];
+      var percentIncreaseAmount = theForm2.elements["desiredIncrease"];
+      var percentIncrease = 0;
+
+      if (percentIncreaseAmount.value != "") {
+        percentIncrease = parseInt(percentIncreaseAmount.value);
+      }
+
+      return percentIncrease;
+    }
+
+    function calculateIncrease() {
+
+      var getIncrease = getPreviousDonation() * getDesiredIncrease() / 100;
+      var increase = Math.round(getIncrease * Math.pow(10, 2)) / Math.pow(10, 2);
+
+      var totalIncrease = increase + getPreviousDonation();
+
+      document.getElementById('increaseAmount').innerHTML = "$"+increase;
+      document.getElementById('increaseTotal').innerHTML = "$"+totalIncrease;
+
+    }
+
+  </script>
+
+  <h2>Contribution Increase</h2>
+  <form action="" class="contributionCalculator" id="contributionCalculator" onsubmit="return false;">
+    <div class="top">
+
+      <!--This section displays the donation-->
+      Your previous donation:<br />
+      <span class="salary-initial">
+        <input type="number" min="0" step="100" id="previousDonation" name="previousDonation" onchange="calculateIncrease()" placeholder="0"/>
+          <label class="input__label">
+            <div class="input__label-content">$</div>
+          </label>
+      </span><br />
+
+      <!--This section displays your salary-->
+      The percent you want to increase:<br />
+      <span class="salary-initial">
+        <input type="number" min="0.00" step=".1" id="desiredIncrease" name="desiredIncrease" onchange="calculateIncrease()" placeholder="0.0"/>
+          <label class="output__label">
+            <div class="output__label-content">%</div>
+          </label>
+      </span>
+    </div>
+
+    <div class="bottom">
+    <!--This section displays the percentage-->
+      Increases your donation by
+      <span id="increaseAmount">$0.00</span> For a total of
+      <span id="increaseTotal">$0.00</span>
+    </div>
+
+  </form>
+</section>
