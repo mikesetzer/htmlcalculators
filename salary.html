@@ -1,0 +1,133 @@
+<link href='https://fonts.googleapis.com/css?family=Work+Sans:300,400,500' rel='stylesheet' type='text/css'>
+
+<section class="calculator1">
+ <style>
+ .calculator1 {
+ background-color: rgba(224, 183, 0, 0.13);
+ padding: 10px;
+ font-family: "Work Sans", "Helvetica", sans-serif;
+ font-size: 24px;
+ line-height: 2.0;
+ font-weight: 300;
+ }
+ .calculator1 html {
+ box-sizing: border-box;
+ }
+ .calculator1 h2 {
+ padding: 10px;
+ padding-bottom: 0;
+ font-family: "Work Sans", "Helvetica", sans-serif;
+ font-weight: 500;
+ font-size: 22px;
+ text-align: center;
+ margin: 0;
+ }
+ .calculator1 input {
+ font: 300 1em "Work Sans", "Helvetica", sans-serif;
+ border: 0;
+ outline: none;
+ color: white;
+ background-color: #539ed0;
+ -webkit-appearance: none;
+ padding: 5px 8px 5px 25px;
+ box-sizing: border-box;
+ max-width: 158px;
+ min-width: 115px;
+ text-align: right;
+ font-weight: 400;
+ }
+ .calculator1 .salary-initial, .calculator1 .donation {
+ position: relative;
+ }
+ .calculator1 input[type=number]::-webkit-outer-spin-button,
+ .calculator1 input[type=number]::-webkit-inner-spin-button {
+ -webkit-appearance: none;
+ }
+ .calculator1 .input__label {
+ display: inline-block;
+ position: absolute;
+ top: -4px;
+ left: 0;
+ padding: 0 0 0 8px;
+ font-size: 80%;
+ user-select: none;
+ font-weight: 300;
+ color: white;
+ }
+ .calculator1 #calculatedPercentage {
+ max-width: 75px;
+ padding: 5px 8px 2px 8px;
+ outline: none;
+ color: black;
+ border-bottom: solid 3px #FFC904;
+ }
+ </style>
+
+ <script>
+function getDonation() {
+  var theForm = document.forms["salaryCalculator"];
+  var donationAmount = theForm.elements["donationInitial"];
+  var donation = 0;
+
+  if (donationAmount.value != "") {
+    donation = parseInt(donationAmount.value);
+  }
+
+  return donation;
+}
+
+function getSalary() {
+  var theForm = document.forms["salaryCalculator"];
+  var salaryAmount = theForm.elements["totalSalary"];
+  var salary = 0;
+
+  if (salaryAmount.value != "") {
+    salary = parseInt(salaryAmount.value);
+  }
+
+  return salary;
+}
+
+function calculateDonation() {
+
+  if (getSalary() == 0){
+    document.getElementById('calculatedPercentage').innerHTML = 0 + "%";
+  } else {
+    var getPercentage = getDonation() / getSalary();
+    var percentage = (getPercentage*100).toFixed(2);
+
+    document.getElementById('calculatedPercentage').innerHTML = percentage + "%";
+  }
+}
+ </script>
+
+ <h2>Salary Percentage</h2>
+
+ <form action="" class="salaryCalculator" id="salaryCalculator" onsubmit="return false;">
+
+ <!--This section displays the donation-->
+ Your donation of
+ <span class="salary-initial">
+ <input type="number" min="0" step="100" id="donationInitial" name="donationInitial" onchange="calculateDonation()" />
+ <label class="input__label">
+ <div class="input__label-content">$</div>
+ </label>
+ </span>
+
+ <!--This section displays the percentage-->
+ is
+ <span id="calculatedPercentage">0%</span>
+ of your total salary
+ of
+
+ <!--This section displays your salary-->
+ <span class="salary-initial">
+ <input type="number" min="0" step="100" id="totalSalary" name="totalSalary" onchange="calculateDonation()" />
+ <label class="input__label">
+ <span class="input__label-content">$</span>
+ </label>
+ </input>
+ </span>
+
+ </form>
+</p>
