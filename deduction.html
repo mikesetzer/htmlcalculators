@@ -1,0 +1,141 @@
+<link href='https://fonts.googleapis.com/css?family=Work+Sans:300,400,500' rel='stylesheet' type='text/css'>
+
+<section class="calculator3">
+
+  <style>
+    .calculator3 {
+      background-color: rgba(224, 183, 0, 0.13);
+      padding: 10px;
+      font-family: "Work Sans", "Helvetica", sans-serif;
+      max-width: 300px;
+      font-size: 16px;
+      line-height: 2.0;
+      font-weight: 400;
+    }
+    .calculator3 html {
+      box-sizing: border-box;
+    }
+    .calculator3 h2 {
+      padding: 10px;
+      padding-bottom: 0;
+      font-family: "Work Sans", "Helvetica", sans-serif;
+      font-weight: 500;
+      font-size: 22px;
+      text-align: center;
+      margin: 0;
+    }
+    .calculator3 .bottom {
+      font-size: 18px;
+    }
+    .calculator3 input {
+      font: 300 1.25em "Work Sans", "Helvetica", sans-serif;
+      border: 0;
+      outline: none;
+      color: white;
+      background-color: #539ed0;
+      -webkit-appearance: none;
+      padding: 5px 8px 5px 8px;
+      box-sizing: border-box;
+      max-width: 100px;
+      min-width: 100px;
+      text-align: right;
+      font-weight: 400;
+    }
+    .calculator3 #numberOfPaychecks {
+      max-width: 50px;
+      min-width: 50px;
+      text-align: center;
+      padding: 5px 5px 5px 5px;
+    }
+    .calculator3 .salary-initial, .calculator3 .donation {
+      position: relative;
+    }
+    .calculator3 input[type=number]::-webkit-outer-spin-button,
+    .calculator3 input[type=number]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+    .calculator3 .input__label {
+      display: inline-block;
+      position: absolute;
+      top: -8px;
+      left: 0;
+      padding: 0 0 0 6px;
+      font-size: 100%;
+      user-select: none;
+      font-weight: 400;
+      color: white;
+    }
+    .calculator3 #deductionAmount {
+      max-width: 75px;
+      padding: 5px 8px 2px 8px;
+      outline: none;
+      color: black;
+      border-bottom: solid 3px #FFC904;
+      font-size: 1.35em;
+    }
+  </style>
+
+  <script>
+    /*function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    } */
+
+    function getPayrollDonation() {
+      var theForm3 = document.forms["deductionCalculator"];
+      var payrollAmount = theForm3.elements["payrollDonation"];
+      var payroll = 0;
+
+      if (payrollAmount.value != "") {
+        payroll = parseInt(payrollAmount.value);
+      }
+
+      return payroll;
+    }
+
+    function getNumberOfPaychecks() {
+      var theForm3 = document.forms["deductionCalculator"];
+      var paychecksAmount = theForm3.elements["numberOfPaychecks"];
+      var paychecks = 0;
+
+      if (paychecksAmount.value != "") {
+        paychecks = parseInt(paychecksAmount.value);
+      }
+
+      return paychecks;
+    }
+
+    function calculateDeduction() {
+      if (document.getElementById('numberOfPaychecks').value == ""){
+
+      } else {
+        var getDeduction = getPayrollDonation() / getNumberOfPaychecks();
+        var deduction = Math.round(getDeduction * Math.pow(10, 2)) / Math.pow(10, 2);
+
+        document.getElementById('deductionAmount').innerHTML = "$" + deduction;
+      }
+    }
+  </script>
+
+  <h2>Contribution Increase</h2>
+  <form action="" class="deductionCalculator" id="deductionCalculator" onsubmit="return false;">
+
+      <!--This section displays the donation-->
+      A donation of:
+      <span class="salary-initial">
+        <input type="number" min="0" step="100" id="payrollDonation" name="payrollDonation" onchange="calculateDeduction()" placeholder="0"/>
+          <label class="input__label">
+            <div class="input__label-content">$</div>
+          </label>
+      </span>
+
+      <!--This section displays your salary-->
+      deducted over the period of
+      <span class="salary-initial">
+        <input type="number" max="999" min="1" step="1" id="numberOfPaychecks" name="numberOfPaychecks" onchange="calculateDeduction()" placeholder="0"/>
+      </span> paychecks, will deduct
+
+    <!--This section displays the percentage-->
+      <span id="deductionAmount">$0.00</span> per paycheck.
+
+  </form>
+</section>
